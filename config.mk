@@ -1,11 +1,12 @@
 # st version
-VERSION = 0.8.1
+VERSION = 0.8.1-meldon
 
 # Customize below to fit your system
 
 # paths
 PREFIX = /usr/local
 MANPREFIX = $(PREFIX)/share/man
+FONTPREFIX = /usr/share/fonts/truetype
 
 X11INC = /usr/X11R6/include
 X11LIB = /usr/X11R6/lib
@@ -24,5 +25,4 @@ STCFLAGS = $(INCS) $(CPPFLAGS) $(CFLAGS)
 STLDFLAGS = $(LIBS) $(LDFLAGS)
 
 # compiler and linker
-# CC = c99
-
+CC = gcc

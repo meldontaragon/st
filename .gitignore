@@ -1,4 +1,3 @@
 *.o
 patches-old
-config.h
 st

@@ -15,7 +15,7 @@ options:
 	@echo "LDFLAGS = $(STLDFLAGS)"
 	@echo "CC      = $(CC)"
 
-config.h: config.def.h
+config.h: 
 	cp config.def.h config.h
 
 .c.o:
@@ -47,6 +47,9 @@ install: st
 	mkdir -p $(DESTDIR)$(MANPREFIX)/man1
 	sed "s/VERSION/$(VERSION)/g" < st.1 > $(DESTDIR)$(MANPREFIX)/man1/st.1
 	chmod 644 $(DESTDIR)$(MANPREFIX)/man1/st.1
+	mkdir -p $(DESTDIR)$(FONTPREFIX)/droid-sans-mono
+	cp -f droid-sans-mono/DroidSansMono.ttf $(DESTDIR)$(FONTPREFIX)/droid-sans-mono/DroidSansMono.ttf
+	chmod 644 $(DESTDIR)$(FONTPREFIX)/droid-sans-mono/DroidSansMono.ttf
 	tic -sx st.info
 	@echo Please see the README file regarding the terminfo entry of st.
 
