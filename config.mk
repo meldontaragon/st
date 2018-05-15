@@ -20,7 +20,7 @@ LIBS = -L$(X11LIB) -lm -lrt -lX11 -lutil -lXft \
        `pkg-config --libs freetype2`
 
 # flags
-CPPFLAGS = -DVERSION=\"$(VERSION)\" -D_XOPEN_SOURCE=600
+CPPFLAGS = -DVERSION=\"$(VERSION)\" -D_XOPEN_SOURCE=600 -g3 -Og
 STCFLAGS = $(INCS) $(CPPFLAGS) $(CFLAGS)
 STLDFLAGS = $(LIBS) $(LDFLAGS)
 
