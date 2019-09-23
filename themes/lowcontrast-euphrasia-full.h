@@ -1,15 +1,33 @@
 /* color theme for st */
 /*
-    required items
-    - colorname array with 16 colors
-    - defaultfg value
-    - defaultbg value
-    - defaultcs value
-    - defaultrcs value
-    optional
-    - defaultitalic value
-    - defaultunderline value
- */
+
+    types:
+    Color name list (typically 15 colors + extras)
+    - static const char *colorname[]
+        OR
+    - static const char *altcolorname[]
+    
+    Number for default foreground
+    - unsigned int defaultfg
+    
+    Number for default background
+    - unsigned int defaultbg
+
+    Number for default cursor
+    - static unsigned int defaultcs
+        OR
+    - static unsigned int defaultrcs
+
+    optional:
+    Number for default italicized
+    - static unsigned int defaultitalic
+
+    Number for default underline
+    - static unsigned int defaultunderline
+ */ 
+
+
+
 
 /* lowcontrast for primary theme */
 static const char *colorname[] = {
