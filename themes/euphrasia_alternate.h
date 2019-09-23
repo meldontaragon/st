@@ -1,6 +1,25 @@
-/* Terminal colors (16 first used in escape sequence) */
-static const char *colorname[] = {
+/* alternate color theme for st */
+/*
+    types:
+    Color name list (typically 15 colors + extras)
+    - static const char *colorname[]
+        OR
+    - static const char *altcolorname[]
 
+    Number background, foreground, and cursor
+    - unsigned int defaultfg
+    - unsigned int defaultbg
+    - static unsigned int defaultcs
+        OR
+    - static unsigned int defaultrcs
+
+    optional:
+    Number for default italicized/underline
+    - static unsigned int defaultitalic
+    - static unsigned int defaultunderline
+ */
+/* Terminal colors (16 first used in escape sequence) */
+static const char *altcolorname[] = {
     /* 8 normal colors */
     [0] = "#192033",               /* black   */
     [1] = "#a62a3e",               /* red     */
@@ -10,7 +29,6 @@ static const char *colorname[] = {
     [5] = "#7c4f9f",               /* magenta */
     [6] = "#258f8f",               /* cyan    */
     [7] = "#77858c",               /* white   */
-
     /* 8 bright colors */
     [8]  = "#666666",               /* black   */
     [9]  = "#f04758",               /* red     */
@@ -20,7 +38,6 @@ static const char *colorname[] = {
     [13] = "#c953ef",               /* magenta */
     [14] = "#60c6c8",               /* cyan    */
     [15] = "#c0c0c0",               /* white   */
-
     /* special colors */
     [256] = "#cfcfd9",               /* background */
     [257] = "#1c2027",               /* foreground */
@@ -28,16 +45,6 @@ static const char *colorname[] = {
 
 /*
  * Default colors (colorname index)
- * foreground, background, cursor
+ * alternate curse
  */
-static unsigned int defaultfg = 257;
-static unsigned int defaultbg = 256;
-static unsigned int defaultcs = 257;
-
-/*
- * Colors used, when the specific fg == defaultfg. So in reverse mode this
- * will reverse too. Another logic would only make the simple feature too
- * complex.
- */
-static unsigned int defaultitalic = 7;
-static unsigned int defaultunderline = 7;
+static unsigned int defaultrcs = 257;
