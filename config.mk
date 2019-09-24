@@ -7,7 +7,7 @@ VERSION = 0.8.2-meldon
 # paths
 PREFIX = /usr/local
 MANPREFIX = $(PREFIX)/share/man
-FONTPREFIX = /usr/share/fonts/truetype
+FONTPREFIX = $(PREFIX)/share/fonts/truetype
 
 X11INC = /usr/X11R6/include
 X11LIB = /usr/X11R6/lib
