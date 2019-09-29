@@ -1,6 +1,6 @@
 # st version
 
-VERSION = 0.8.2-meldon
+VERSION = 0.8.2.3+meldon
 
 # Customize below to fit your system
 
