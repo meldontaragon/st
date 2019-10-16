@@ -125,9 +125,9 @@ static unsigned int defaultattr = 11;
  * Beware that overloading Button1 will disable the selection.
  */
 static MouseShortcut mshortcuts[] = {
-	/* button               mask            string */
-	{ Button4,              XK_NO_MOD,      "\031" },
-	{ Button5,              XK_NO_MOD,      "\005" },
+	/* mask                 button   function        argument       release */
+	{ XK_ANY_MOD,           Button4, kscrollup,      {.s = "\031"} },
+	{ XK_ANY_MOD,           Button5, kscrolldown,    {.s = "\005"} },
 };
 
 MouseKey mkeys[] = {
