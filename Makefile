@@ -33,25 +33,38 @@ clean:
 	rm -f st $(OBJ) st-$(VERSION).tar.gz
 
 dist: clean
-	mkdir -p st-$(VERSION)
+	mkdir -p $(PKGDIR)
 	cp -R FAQ LEGACY TODO LICENSE Makefile README config.mk\
 		config.def.h st.info st.1 arg.h st.h win.h $(SRC)\
-		st-$(VERSION)
-	tar -cf - st-$(VERSION) | gzip > st-$(VERSION).tar.gz
-	rm -rf st-$(VERSION)
+		$(PKGDIR)
+	tar -cf - st-$(VERSION) | gzip > $(PKGDIR).tar.gz
+	rm -rf $(PKGDIR)
 
 install: st
-	mkdir -p $(DESTDIR)$(PREFIX)/bin
-	cp -f st $(DESTDIR)$(PREFIX)/bin
-	chmod 755 $(DESTDIR)$(PREFIX)/bin/st
+	install -Dm 755 st $(DESTDIR)$(PREFIX)/bin/st
 	mkdir -p $(DESTDIR)$(MANPREFIX)/man1
-	sed "s/VERSION/$(VERSION)/g" < st.1 > $(DESTDIR)$(MANPREFIX)/man1/st.1
-	chmod 644 $(DESTDIR)$(MANPREFIX)/man1/st.1
-	mkdir -p $(DESTDIR)$(FONTPREFIX)/droid-sans-mono
-	cp -f droid-sans-mono/DroidSansMono.ttf $(DESTDIR)$(FONTPREFIX)/droid-sans-mono/DroidSansMono.ttf
-	chmod 644 $(DESTDIR)$(FONTPREFIX)/droid-sans-mono/DroidSansMono.ttf
+	sed "s/VERSION/$(VERSION)/g" < st.1 > st.1.$(VERSION)
+	install -Dm644 st.1.$(VERSION) $(DESTDIR)$(MANPREFIX)/man1/st.1
+	rm ./st.1.$(VERSION)
+	install -Dm 644 droid-sans-mono/DroidSansMono.ttf $(DESTDIR)$(FONTPREFIX)/droid-sans-mono/DroidSansMono.ttf
 	tic -sx st.info
 	@echo Please see the README file regarding the terminfo entry of st.
+
+build: clean clean-build st
+	install -Dm755 st ./$(BUILDDIR)/usr/bin/st
+	sed "s/VERSION/$(VERSION)/g" < st.1 > st.1.$(VERSION)
+	install -Dm644 ./st.1.$(VERSION) ./$(BUILDDIR)/usr/share/man/man1/st.1
+	rm ./st.1.$(VERSION)
+	install -Dm644 droid-sans-mono/DroidSansMono.ttf ./$(BUILDDIR)/usr/share/fonts/truetype/droid-sans-mono/DroidSansMono.ttf
+	mkdir -p ./$(BUILDDIR)/etc/terminfo/s 
+	tic -o ./$(BUILDDIR)/etc/terminfo/ -sx st.info
+	sed "s/VERSION/$(VERSION)/g" < control > control.$(VERSION)
+	install -Dm644 ./control.$(VERSION) ./$(BUILDDIR)/DEBIAN/control
+	rm ./control.$(VERSION)
+	@echo pkg built in ./$(BUILDDIR)
+
+clean-build:
+	rm -rf ./$(BUILDDIR)
 
 uninstall:
 	rm -f $(DESTDIR)$(PREFIX)/bin/st

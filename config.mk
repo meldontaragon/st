@@ -1,6 +1,8 @@
 # st version
 
-VERSION = 0.8.2.3+meldon
+VERSION = 0.8.2.4+meldon-rc1
+BUILDDIR = st_$(VERSION)
+PKGDIR = st-$(VERSION)
 
 # Customize below to fit your system
 
