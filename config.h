@@ -88,7 +88,7 @@ unsigned int alpha = 0xcc;
 /* include color theme */
 /* #include "themes/solarized-full.h" */
 /* #include "themes/lowcontrast-euphrasia-full.h" */
-#include "themes/lumifoo_primary.h"
+#include "themes/hybrid_primary.h"
 #include "themes/euphrasia_alternate.h"
 
 /*
