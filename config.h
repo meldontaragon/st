@@ -11,13 +11,15 @@ static int borderpx = 2;
 /*
  * What program is execed by st depends of these precedence rules:
  * 1: program passed with -e
- * 2: utmp option
+ * 2: scroll and/or utmp
  * 3: SHELL environment variable
  * 4: value of shell in /etc/passwd
  * 5: value of shell in config.h
  */
 static char *shell = "/usr/bin/zsh";
 char *utmp = NULL;
+/* scroll program: to enable use a string like "scroll" */
+char *scroll = NULL;
 char *stty_args = "stty raw pass8 nl -echo -iexten -cstopb 38400";
 
 /* identification sequence returned in DA and DECID */
@@ -31,6 +33,7 @@ static float chscale = 1.0;
  * word delimiter string
  *
  * More advanced example: " `'\"()[]{}"
+ * More advanced example: L" `'\"()[]{}"
  */
 wchar_t *worddelimiters = L" ";
 
@@ -40,6 +43,19 @@ static unsigned int tripleclicktimeout = 600;
 
 /* alt screens */
 int allowaltscreen = 1;
+
+/* allow certain non-interactive (insecure) window operations such as:
+   setting the clipboard text */
+int allowwindowops = 0;
+
+/*
+ * draw latency range in ms - from new content/keypress/etc until drawing.
+ * within this range, st draws when content stops arriving (idle). mostly it's
+ * near minlatency, but it waits longer for slow updates to avoid partial draw.
+ * low minlatency will tear/flicker more, as it can "detect" idle too early.
+ */
+static double minlatency = 8;
+static double maxlatency = 33;
 
 /* frames per second st should at maximum draw to the screen */
 static unsigned int xfps = 120;
@@ -134,15 +150,24 @@ static uint forcemousemod = 0;
  */
 static MouseShortcut mshortcuts[] = {
 	/* mask                 button   function        argument       release */
-	{ XK_ANY_MOD,           Button4, kscrollup,      {.s = "\031"} },
-	{ XK_ANY_MOD,           Button5, kscrolldown,    {.s = "\005"} },
+	// { XK_ANY_MOD,           Button4, kscrollup,      {.s = "\031"} },
+	// { XK_ANY_MOD,           Button5, kscrolldown,    {.s = "\005"} },
+	{ XK_ANY_MOD,           Button4, kscrollup,      {.i = 1} },
+	{ XK_ANY_MOD,           Button5, kscrolldown,    {.i = 1} },
+
+	{ XK_ANY_MOD,           Button2, selpaste,       {.i = 0},      1 },
+//	{ ShiftMask,            Button4, ttysend,        {.s = "\033[5;2~"} },
+//	{ XK_ANY_MOD,           Button4, ttysend,        {.s = "\031"} },
+//	{ ShiftMask,            Button5, ttysend,        {.s = "\033[6;2~"} },
+//	{ XK_ANY_MOD,           Button5, ttysend,        {.s = "\005"} },
+
 };
 
-MouseKey mkeys[] = {
-	/* button               mask            function        argument */
-	{ Button4,              XK_NO_MOD,      kscrollup,      {.i =  1} },
-	{ Button5,              XK_NO_MOD,      kscrolldown,    {.i =  1} },
-};
+// MouseKey mkeys[] = {
+// 	/* button               mask            function        argument */
+// 	{ Button4,              XK_NO_MOD,      kscrollup,      {.i =  -1} },
+// 	{ Button5,              XK_NO_MOD,      kscrolldown,    {.i =  1} },
+// };
 
 /* Internal keyboard shortcuts. */
 #define MODKEY Mod1Mask
@@ -160,8 +185,10 @@ static Shortcut shortcuts[] = {
 	{ TERMMOD,              XK_C,           clipcopy,       {.i =  0} },
 	{ TERMMOD,              XK_V,           clippaste,      {.i =  0} },
 	{ TERMMOD,              XK_Y,           selpaste,       {.i =  0} },
+	{ ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
 	{ XK_ANY_MOD,           XK_F6,          swapcolors,     {.i =  0} },
+//	{ TERMMOD,              XK_I,           iso14755,       {.i =  0} },
 	{ TERMMOD,              XK_P,           kscrollup,      {.i = -1} },
 	{ TERMMOD,              XK_N,           kscrolldown,    {.i = -1} },
 };
