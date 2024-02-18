@@ -1798,6 +1798,7 @@ csihandle(void)
 		}
 		break;
 	case 'S': /* SU -- Scroll <n> line up */
+		if (csiescseq.priv) break;
 		DEFAULT(csiescseq.arg[0], 1);
 		tscrollup(term.top, csiescseq.arg[0], 0);
 		break;
