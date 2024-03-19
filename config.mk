@@ -1,9 +1,5 @@
 # st version
-
-VERSION = 0.9.2.1
-BUILDDIR = st_$(VERSION)
-PKGDIR = st-$(VERSION)
-
+VERSION = 0.9.1
 
 # Customize below to fit your system
 
