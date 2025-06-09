@@ -1,6 +1,6 @@
 # st version
 
-VERSION = 0.9.2+meldon
+VERSION = 0.9.2.1
 BUILDDIR = st_$(VERSION)
 PKGDIR = st-$(VERSION)
 
