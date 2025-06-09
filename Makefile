@@ -40,7 +40,7 @@ install: st
 	sed "s/VERSION/$(VERSION)/g" < st.1 > st.1.$(VERSION)
 	install -Dm644 st.1.$(VERSION) $(DESTDIR)$(MANPREFIX)/man1/st.1
 	rm ./st.1.$(VERSION)
-	tic -sx st.info
+	tic -o $(DESTDIR)$(PREFIX)/etc/terminfo/ -sx st.info
 	@echo Please see the README file regarding the terminfo entry of st.
 
 install-font: st
@@ -61,9 +61,6 @@ build: clean clean-build st
 	install -Dm644 droid-sans-mono/DroidSansMono.ttf ./$(BUILDDIR)/usr/share/fonts/truetype/droid-sans-mono/DroidSansMono.ttf
 	mkdir -p ./$(BUILDDIR)/etc/terminfo/s 
 	tic -o ./$(BUILDDIR)/etc/terminfo/ -sx st.info
-	sed "s/VERSION/$(VERSION)/g" < control > control.$(VERSION)
-	install -Dm644 ./control.$(VERSION) ./$(BUILDDIR)/DEBIAN/control
-	rm ./control.$(VERSION)
 	@echo pkg built in ./$(BUILDDIR)
 
 clean-build:
