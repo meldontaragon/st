@@ -40,7 +40,8 @@ install: st
 	sed "s/VERSION/$(VERSION)/g" < st.1 > st.1.$(VERSION)
 	install -Dm644 st.1.$(VERSION) $(DESTDIR)$(MANPREFIX)/man1/st.1
 	rm ./st.1.$(VERSION)
-	tic -o $(DESTDIR)$(PREFIX)/etc/terminfo/ -sx st.info
+	mkdir -p $(DESTDIR)/etc/terminfo/s
+	tic -o $(DESTDIR)/etc/terminfo/ -sx st.info
 	@echo Please see the README file regarding the terminfo entry of st.
 
 install-font: st
