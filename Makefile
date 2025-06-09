@@ -40,6 +40,15 @@ install: st
 	sed "s/VERSION/$(VERSION)/g" < st.1 > st.1.$(VERSION)
 	install -Dm644 st.1.$(VERSION) $(DESTDIR)$(MANPREFIX)/man1/st.1
 	rm ./st.1.$(VERSION)
+	tic -sx st.info
+	@echo Please see the README file regarding the terminfo entry of st.
+
+install-font: st
+	install -Dm 755 st $(DESTDIR)$(PREFIX)/bin/st
+	mkdir -p $(DESTDIR)$(MANPREFIX)/man1
+	sed "s/VERSION/$(VERSION)/g" < st.1 > st.1.$(VERSION)
+	install -Dm644 st.1.$(VERSION) $(DESTDIR)$(MANPREFIX)/man1/st.1
+	rm ./st.1.$(VERSION)
 	install -Dm 644 droid-sans-mono/DroidSansMono.ttf $(DESTDIR)$(FONTPREFIX)/droid-sans-mono/DroidSansMono.ttf
 	tic -sx st.info
 	@echo Please see the README file regarding the terminfo entry of st.
