@@ -32,7 +32,6 @@ static float chscale = 1.0;
 /*
  * word delimiter string
  *
- * More advanced example: " `'\"()[]{}"
  * More advanced example: L" `'\"()[]{}"
  */
 wchar_t *worddelimiters = L" ";
@@ -54,7 +53,7 @@ int allowwindowops = 0;
  * near minlatency, but it waits longer for slow updates to avoid partial draw.
  * low minlatency will tear/flicker more, as it can "detect" idle too early.
  */
-static double minlatency = 8;
+static double minlatency = 2;
 static double maxlatency = 33;
 
 /* frames per second st should at maximum draw to the screen */
@@ -154,13 +153,7 @@ static MouseShortcut mshortcuts[] = {
 	// { XK_ANY_MOD,           Button5, kscrolldown,    {.s = "\005"} },
 	{ XK_ANY_MOD,           Button4, kscrollup,      {.i = 1} },
 	{ XK_ANY_MOD,           Button5, kscrolldown,    {.i = 1} },
-
-	{ XK_ANY_MOD,           Button2, selpaste,       {.i = 0},      1 },
-//	{ ShiftMask,            Button4, ttysend,        {.s = "\033[5;2~"} },
-//	{ XK_ANY_MOD,           Button4, ttysend,        {.s = "\031"} },
-//	{ ShiftMask,            Button5, ttysend,        {.s = "\033[6;2~"} },
-//	{ XK_ANY_MOD,           Button5, ttysend,        {.s = "\005"} },
-
+	// { XK_ANY_MOD,           Button2, selpaste,       {.i = 0},      1 },
 };
 
 // MouseKey mkeys[] = {
@@ -188,7 +181,6 @@ static Shortcut shortcuts[] = {
 	{ ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
 	{ XK_ANY_MOD,           XK_F6,          swapcolors,     {.i =  0} },
-//	{ TERMMOD,              XK_I,           iso14755,       {.i =  0} },
 	{ TERMMOD,              XK_P,           kscrollup,      {.i = -1} },
 	{ TERMMOD,              XK_N,           kscrolldown,    {.i = -1} },
 };
@@ -208,10 +200,6 @@ static Shortcut shortcuts[] = {
  * * 0: no value
  * * > 0: cursor application mode enabled
  * * < 0: cursor application mode disabled
- * crlf value
- * * 0: no value
- * * > 0: crlf mode is enabled
- * * < 0: crlf mode is disabled
  *
  * Be careful with the order of the definitions because st searches in
  * this table sequentially, so any XK_ANY_MOD must be in the last
