@@ -5,7 +5,7 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "Droid Sans Mono:pixelsize=14:antialias=true:autohint=true";
+static char *font = "Droid Sans Mono:pixelsize=16:antialias=true:autohint=true";
 static int borderpx = 2;
 
 /*
@@ -101,9 +101,14 @@ unsigned int tabspaces = 8;
 unsigned int alpha = 0xcc;
 
 /* include color theme */
-/* #include "themes/solarized-full.h" */
-/* #include "themes/lowcontrast-euphrasia-full.h" */
-#include "themes/hybrid_primary.h"
+// #include "themes/solarized_full.h" //too blue
+// #include "themes/lowcontrast-euphrasia-full.h" //a bit light
+
+// #include "themes/hybrid_primary.h"
+#include "themes/lumifoo_primary.h"
+// #include "themes/eqie6_primary.h"
+// #include "themes/vacuous2_primary.h"
+
 #include "themes/euphrasia_alternate.h"
 
 /*
@@ -120,7 +125,7 @@ static unsigned int cursorshape = 2;
  */
 
 static unsigned int cols = 140;
-static unsigned int rows = 36;
+static unsigned int rows = 40;
 
 /*
  * Default colour and shape of the mouse cursor
