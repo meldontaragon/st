@@ -51,6 +51,7 @@ install-font: st
 	install -Dm644 st.1.$(VERSION) $(DESTDIR)$(MANPREFIX)/man1/st.1
 	rm ./st.1.$(VERSION)
 	install -Dm 644 droid-sans-mono/DroidSansMono.ttf $(DESTDIR)$(FONTPREFIX)/droid-sans-mono/DroidSansMono.ttf
+	install -Dm 644 droid-sans-mono/DroidSansMNerd.otf $(DESTDIR)$(FONTPREFIX)/droid-sans-mono/DroidSansMNerd.otf
 	tic -sx st.info
 	@echo Please see the README file regarding the terminfo entry of st.
 
@@ -60,6 +61,7 @@ build: clean clean-build st
 	install -Dm644 ./st.1.$(VERSION) ./$(BUILDDIR)/usr/share/man/man1/st.1
 	rm ./st.1.$(VERSION)
 	install -Dm644 droid-sans-mono/DroidSansMono.ttf ./$(BUILDDIR)/usr/share/fonts/truetype/droid-sans-mono/DroidSansMono.ttf
+	install -Dm644 droid-sans-mono/DroidSansMNerd.otf ./$(BUILDDIR)/usr/share/fonts/opentype/droid-sans-mono/DroidSansMNerd.otf
 	mkdir -p ./$(BUILDDIR)/etc/terminfo/s 
 	tic -o ./$(BUILDDIR)/etc/terminfo/ -sx st.info
 	@echo pkg built in ./$(BUILDDIR)
