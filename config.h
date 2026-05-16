@@ -155,18 +155,18 @@ static uint forcemousemod = 0;
  * Beware that overloading Button1 will disable the selection.
  */
 static MouseShortcut mshortcuts[] = {
-	/* mask                 button   function        argument       release */
-	// { XK_ANY_MOD,           Button4, kscrollup,      {.s = "\031"} },
-	// { XK_ANY_MOD,           Button5, kscrolldown,    {.s = "\005"} },
-	{ XK_ANY_MOD,           Button4, kscrollup,      {.i = 1} },
-	{ XK_ANY_MOD,           Button5, kscrolldown,    {.i = 1} },
-	// { XK_ANY_MOD,           Button2, selpaste,       {.i = 0},      1 },
+	/* mask             button      function        argument    release */
+	// { XK_ANY_MOD,    Button4,    kscrollup,      {.s = "\031"} },
+	// { XK_ANY_MOD,    Button5,    kscrolldown,    {.s = "\005"} },
+	{ XK_ANY_MOD,       Button4,    kscrollup,      {.i = 1} },
+	{ XK_ANY_MOD,       Button5,    kscrolldown,    {.i = 1} },
+	// { XK_ANY_MOD,    Button2,    selpaste,       {.i = 0},   1 },
 };
 
-// MouseKey mkeys[] = {
-// 	/* button               mask            function        argument */
-// 	{ Button4,              XK_NO_MOD,      kscrollup,      {.i =  -1} },
-// 	{ Button5,              XK_NO_MOD,      kscrolldown,    {.i =  1} },
+// static MouseKey mkeys[] = {
+// 	/* button       mask            function        argument */
+// 	{ Button4,      XK_NO_MOD,      kscrollup,      {.i =  1} },
+// 	{ Button5,      XK_NO_MOD,      kscrolldown,    {.i =  1} },
 // };
 
 /* Internal keyboard shortcuts. */

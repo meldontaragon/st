@@ -29,14 +29,6 @@ typedef struct {
 } Shortcut;
 
 typedef struct {
-  uint mod;
-  uint button;
-  void (*func)(const Arg *);
-  const Arg arg;
-  uint  release;
-} MouseShortcut;
-
-typedef struct {
   KeySym k;
   uint mask;
   char *s;
@@ -459,11 +451,12 @@ int
 mouseaction(XEvent *e, uint release)
 {
   int btn = e->xbutton.button;
+  
   MouseShortcut *ms;
+//   MouseKey *mk;
 
-  // MouseKey *mk;
+  // DEBUG:
   // fprintf(stdout, "btn value: %d\n", (int)btn);
-
 
 	/* ignore Button<N>mask for Button<N> - it's set on release */
 	uint state = e->xbutton.state & ~buttonmask(e->xbutton.button);
@@ -477,13 +470,13 @@ mouseaction(XEvent *e, uint release)
 		}
 	}
 
-  // for (mk = mkeys; mk < mkeys + LEN(mkeys); mk++) {
-  //   if (mk->button == btn
-  //       && match(mk->mask, e->xbutton.state)) {
-  //     mk->func(&mk->arg);
-  //     return 1;
-  //   }
-  // }
+//   for (mk = mkeys; mk < mkeys + LEN(mkeys); mk++) {
+//     if (mk->button == btn
+//         && match(mk->mask, e->xbutton.state)) {
+//       mk->func(&mk->arg);
+//       return 1;
+//     }
+//   }
 
   return 0;
 }

@@ -93,11 +93,20 @@ typedef union {
 	const char *s;
 } Arg;
 
+typedef struct {
+  uint mod;
+  uint button;
+  void (*func)(const Arg *);
+  const Arg arg;
+  uint  release;
+} MouseShortcut;
+
 // typedef struct {
-// 	uint button;
 // 	uint mask;
+// 	uint button;
 // 	void (*func)(const Arg *);
 // 	const Arg arg;
+// 	uint release;
 // } MouseKey;
 
 void die(const char *, ...);
