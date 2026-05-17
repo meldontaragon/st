@@ -22,16 +22,14 @@ LIBS = -L$(X11LIB) -lm -lrt -lX11 -lutil -lXft \
 	`$(PKG_CONFIG) --libs freetype2`
 
 # flags
-CFLAGS = -std=c99 -Wall
+# CFLAGS = -std=c99 -Wall -O0 -g3
+CFLAGS = -std=c99 -O3 -g3
 
 #new
-STCPPFLAGS = -DVERSION=\"$(VERSION)\" -D_XOPEN_SOURCE=600 -g3 -O0
+STCPPFLAGS = -DVERSION=\"$(VERSION)\" -D_XOPEN_SOURCE=600 -g3
 STCFLAGS = $(INCS) $(STCPPFLAGS) $(CPPFLAGS) $(CFLAGS)
 
 STLDFLAGS = $(LIBS) $(LDFLAGS)
-
-CC = gcc
-# CC = clang
 
 # OpenBSD:
 #CPPFLAGS = -DVERSION=\"$(VERSION)\" -D_XOPEN_SOURCE=600 -D_BSD_SOURCE
@@ -42,3 +40,5 @@ CC = gcc
 
 # compiler and linker
 # CC = c99
+# CC = gcc
+CC = clang
