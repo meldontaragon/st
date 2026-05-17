@@ -4,7 +4,7 @@
 #include <sys/types.h>
 
 /* Arbitrary size */
-#define HISTSIZE      2000
+#define HISTSIZE      3000
 
 /* macros */
 #define MIN(a, b)		((a) < (b) ? (a) : (b))
@@ -15,57 +15,57 @@
 #define DEFAULT(a, b)		(a) = (a) ? (a) : (b)
 #define LIMIT(x, a, b)		(x) = (x) < (a) ? (a) : (x) > (b) ? (b) : (x)
 #define ATTRCMP(a, b)		((a).mode != (b).mode || (a).fg != (b).fg || \
-                (a).bg != (b).bg)
+				(a).bg != (b).bg)
 #define TIMEDIFF(t1, t2)	((t1.tv_sec-t2.tv_sec)*1000 + \
-                (t1.tv_nsec-t2.tv_nsec)/1E6)
+				(t1.tv_nsec-t2.tv_nsec)/1E6)
 #define MODBIT(x, set, bit)	((set) ? ((x) |= (bit)) : ((x) &= ~(bit)))
 
 #define TRUECOLOR(r,g,b)	(1 << 24 | (r) << 16 | (g) << 8 | (b))
 #define IS_TRUECOL(x)		(1 << 24 & (x))
 #define TLINE(y)       ((y) < term.scr ? term.hist[((y) + term.histi - term.scr \
-               + HISTSIZE + 1) % HISTSIZE] : term.line[(y) - term.scr])
+			   + HISTSIZE + 1) % HISTSIZE] : term.line[(y) - term.scr])
 
 enum term_mode {
-    MODE_WRAP        = 1 << 0,
-    MODE_INSERT      = 1 << 1,
-    MODE_ALTSCREEN   = 1 << 2,
-    MODE_CRLF        = 1 << 3,
-    MODE_ECHO        = 1 << 4,
-    MODE_PRINT       = 1 << 5,
-    MODE_UTF8        = 1 << 6,
-    MODE_SIXEL       = 1 << 7,
+	MODE_WRAP        = 1 << 0,
+	MODE_INSERT      = 1 << 1,
+	MODE_ALTSCREEN   = 1 << 2,
+	MODE_CRLF        = 1 << 3,
+	MODE_ECHO        = 1 << 4,
+	MODE_PRINT       = 1 << 5,
+	MODE_UTF8        = 1 << 6,
+	MODE_SIXEL       = 1 << 7,
 };
 
 enum glyph_attribute {
-    ATTR_NULL       = 0,
-    ATTR_BOLD       = 1 << 0,
-    ATTR_FAINT      = 1 << 1,
-    ATTR_ITALIC     = 1 << 2,
-    ATTR_UNDERLINE  = 1 << 3,
-    ATTR_BLINK      = 1 << 4,
-    ATTR_REVERSE    = 1 << 5,
-    ATTR_INVISIBLE  = 1 << 6,
-    ATTR_STRUCK     = 1 << 7,
-    ATTR_WRAP       = 1 << 8,
-    ATTR_WIDE       = 1 << 9,
-    ATTR_WDUMMY     = 1 << 10,
-    ATTR_BOLD_FAINT = ATTR_BOLD | ATTR_FAINT,
+	ATTR_NULL       = 0,
+	ATTR_BOLD       = 1 << 0,
+	ATTR_FAINT      = 1 << 1,
+	ATTR_ITALIC     = 1 << 2,
+	ATTR_UNDERLINE  = 1 << 3,
+	ATTR_BLINK      = 1 << 4,
+	ATTR_REVERSE    = 1 << 5,
+	ATTR_INVISIBLE  = 1 << 6,
+	ATTR_STRUCK     = 1 << 7,
+	ATTR_WRAP       = 1 << 8,
+	ATTR_WIDE       = 1 << 9,
+	ATTR_WDUMMY     = 1 << 10,
+	ATTR_BOLD_FAINT = ATTR_BOLD | ATTR_FAINT,
 };
 
 enum selection_mode {
-    SEL_IDLE = 0,
-    SEL_EMPTY = 1,
-    SEL_READY = 2
+	SEL_IDLE = 0,
+	SEL_EMPTY = 1,
+	SEL_READY = 2
 };
 
 enum selection_type {
-    SEL_REGULAR = 1,
-    SEL_RECTANGULAR = 2
+	SEL_REGULAR = 1,
+	SEL_RECTANGULAR = 2
 };
 
 enum selection_snap {
-    SNAP_WORD = 1,
-    SNAP_LINE = 2
+	SNAP_WORD = 1,
+	SNAP_LINE = 2
 };
 
 typedef unsigned char uchar;
@@ -77,20 +77,20 @@ typedef uint_least32_t Rune;
 
 #define Glyph Glyph_
 typedef struct {
-    Rune u;           /* character code */
-    ushort mode;      /* attribute flags */
-    uint32_t fg;      /* foreground  */
-    uint32_t bg;      /* background  */
+	Rune u;           /* character code */
+	ushort mode;      /* attribute flags */
+	uint32_t fg;      /* foreground  */
+	uint32_t bg;      /* background  */
 } Glyph;
 
 typedef Glyph *Line;
 
 typedef union {
-    int i;
-    uint ui;
-    float f;
-    const void *v;
-    const char *s;
+	int i;
+	uint ui;
+	float f;
+	const void *v;
+	const char *s;
 } Arg;
 
 typedef struct {
@@ -100,14 +100,6 @@ typedef struct {
   const Arg arg;
   uint  release;
 } MouseShortcut;
-
-// typedef struct {
-// 	uint mask;
-// 	uint button;
-// 	void (*func)(const Arg *);
-// 	const Arg arg;
-// 	uint release;
-// } MouseKey;
 
 void die(const char *, ...);
 void redraw(void);
@@ -159,6 +151,3 @@ extern unsigned int tabspaces;
 extern unsigned int defaultfg;
 extern unsigned int defaultbg;
 extern unsigned int defaultcs;
-
-// extern MouseKey mkeys[];
-

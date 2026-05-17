@@ -1,4 +1,13 @@
+// object files
 *.o
+
+// old patchs
 patches-old
+
+// build
 st
+
+// vscode & config
 .vscode
+.clangd
+

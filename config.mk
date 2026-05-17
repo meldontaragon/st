@@ -8,9 +8,6 @@ PREFIX = /usr/local
 MANPREFIX = $(PREFIX)/share/man
 FONTPREFIX = $(PREFIX)/share/fonts/truetype
 
-#X11INC = /usr/X11R6/include
-#X11LIB = /usr/X11R6/lib
-
 X11INC = /usr/include/X11
 X11LIB = /usr/lib/X11
 
@@ -18,13 +15,14 @@ PKG_CONFIG = pkg-config
 
 # includes and libs
 INCS = -I$(X11INC) \
-       `$(PKG_CONFIG) --cflags fontconfig` \
-       `$(PKG_CONFIG) --cflags freetype2`
+	`$(PKG_CONFIG) --cflags fontconfig` \
+	`$(PKG_CONFIG) --cflags freetype2`
 LIBS = -L$(X11LIB) -lm -lrt -lX11 -lutil -lXft \
-       `$(PKG_CONFIG) --libs fontconfig` \
-       `$(PKG_CONFIG) --libs freetype2`
+	`$(PKG_CONFIG) --libs fontconfig` \
+	`$(PKG_CONFIG) --libs freetype2`
 
 # flags
+CFLAGS = -std=c99 -Wall
 
 #new
 STCPPFLAGS = -DVERSION=\"$(VERSION)\" -D_XOPEN_SOURCE=600 -g3 -O0
@@ -33,6 +31,7 @@ STCFLAGS = $(INCS) $(STCPPFLAGS) $(CPPFLAGS) $(CFLAGS)
 STLDFLAGS = $(LIBS) $(LDFLAGS)
 
 CC = gcc
+# CC = clang
 
 # OpenBSD:
 #CPPFLAGS = -DVERSION=\"$(VERSION)\" -D_XOPEN_SOURCE=600 -D_BSD_SOURCE
