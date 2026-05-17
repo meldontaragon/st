@@ -5,9 +5,7 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-/* static char *font = "Droid Sans Mono:pixelsize=16:antialias=true:autohint=true"; */
-static char *font = "DroidSansM Nerd Font:pixelsize=16:antialias=true:autohint=true";
-
+static char *font = "DroidSansM Nerd Font:pixelsize=15:antialias=true:autohint=true";
 static int borderpx = 2;
 
 /*
@@ -58,10 +56,6 @@ int allowwindowops = 0;
 static double minlatency = 2;
 static double maxlatency = 33;
 
-/* frames per second st should at maximum draw to the screen */
-static unsigned int xfps = 120;
-static unsigned int actionfps = 30;
-
 /*
  * blinking timeout (set to 0 to disable blinking) for the terminal blinking
  * attribute.
@@ -106,13 +100,14 @@ unsigned int alpha = 0xcc;
 #include "themes/lumifoo_primary.h"
 #include "themes/euphrasia_alternate.h"
 
-/* unused themes
-#include "themes/solarized_full.h"
-#include "themes/lowcontrast-euphrasia-full.h"
-#include "themes/eqie6_primary.h"
-#include "themes/vacuous2_primary.h"
-#include "themes/hybrid_primary.h"
-*/
+/*
+ * Default colors (colorname index)
+ * foreground, background, cursor
+ */
+unsigned int defaultcs  = 256;
+unsigned int defaultrcs = 257;
+unsigned int defaultfg  = 258;
+unsigned int defaultbg  = 259;
 
 /*
  * Default shape of cursor
@@ -148,21 +143,24 @@ static unsigned int defaultattr = 11;
  * Note that if you want to use ShiftMask with selmasks, set this to an other
  * modifier, set to 0 to not use it.
  */
-/* static uint forcemousemod = ShiftMask; */
-static uint forcemousemod = 0;
+static uint forcemousemod = ShiftMask;
+// static uint forcemousemod = 0;
 
 /*
  * Internal mouse shortcuts.
  * Beware that overloading Button1 will disable the selection.
  */
 static MouseShortcut mshortcuts[] = {
-	/* mask             button      function        argument    release */
-	{ XK_ANY_MOD,       Button4,    kscrollup,      {.i = 1} },
-	{ XK_ANY_MOD,       Button5,    kscrolldown,    {.i = 1} },
+	/* mask         button      function        argument    release */
+	{ 0,            Button4,    kscrollup,      {.i = 1} },
+	{ 0,            Button5,    kscrolldown,    {.i = 1} },
+	{ ShiftMask,    Button4,    ttysend,        {.s = "\031"} },
+	{ ShiftMask,    Button5,    ttysend,        {.s = "\005"} },
+
 /*
-	{ XK_ANY_MOD,    Button4,    kscrollup,      {.s = "\031"} },
-	{ XK_ANY_MOD,    Button5,    kscrolldown,    {.s = "\005"} },
-	{ XK_ANY_MOD,    Button2,    selpaste,       {.i = 0},   1 },
+	{ XK_ANY_MOD,   Button4,    kscrollup,      {.s = "\031"} },
+	{ XK_ANY_MOD,   Button5,    kscrolldown,    {.s = "\005"} },
+	{ XK_ANY_MOD,   Button2,    selpaste,       {.i = 0},   1 },
 */
 };
 
@@ -171,22 +169,22 @@ static MouseShortcut mshortcuts[] = {
 #define TERMMOD (ControlMask|ShiftMask)
 
 static Shortcut shortcuts[] = {
-	/* mask                 keysym          function        argument */
-	{ XK_ANY_MOD,           XK_Break,       sendbreak,      {.i =  0} },
-	{ ControlMask,          XK_Print,       toggleprinter,  {.i =  0} },
-	{ ShiftMask,            XK_Print,       printscreen,    {.i =  0} },
-	{ XK_ANY_MOD,           XK_Print,       printsel,       {.i =  0} },
-	{ TERMMOD,              XK_Prior,       zoom,           {.f = +1} },
-	{ TERMMOD,              XK_Next,        zoom,           {.f = -1} },
-	{ TERMMOD,              XK_Home,        zoomreset,      {.f =  0} },
-	{ TERMMOD,              XK_C,           clipcopy,       {.i =  0} },
-	{ TERMMOD,              XK_V,           clippaste,      {.i =  0} },
-	{ TERMMOD,              XK_Y,           selpaste,       {.i =  0} },
-	{ ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
-	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
-	{ XK_ANY_MOD,           XK_F6,          swapcolors,     {.i =  0} },
-	{ TERMMOD,              XK_P,           kscrollup,      {.i = -1} },
-	{ TERMMOD,              XK_N,           kscrolldown,    {.i = -1} },
+	/* mask             keysym          function        argument */
+	{ XK_ANY_MOD,       XK_Break,       sendbreak,      {.i =  0} },
+	{ ControlMask,      XK_Print,       toggleprinter,  {.i =  0} },
+	{ ShiftMask,        XK_Print,       printscreen,    {.i =  0} },
+	{ XK_ANY_MOD,       XK_Print,       printsel,       {.i =  0} },
+	{ TERMMOD,          XK_Prior,       zoom,           {.f = +1} },
+	{ TERMMOD,          XK_Next,        zoom,           {.f = -1} },
+	{ TERMMOD,          XK_Home,        zoomreset,      {.f =  0} },
+	{ TERMMOD,          XK_C,           clipcopy,       {.i =  0} },
+	{ TERMMOD,          XK_V,           clippaste,      {.i =  0} },
+	{ TERMMOD,          XK_Y,           selpaste,       {.i =  0} },
+	{ ShiftMask,        XK_Insert,      selpaste,       {.i =  0} },
+	{ TERMMOD,          XK_Num_Lock,    numlock,        {.i =  0} },
+	{ XK_ANY_MOD,       XK_F6,          swapcolors,     {.i =  0} },
+	{ TERMMOD,          XK_P,           kscrollup,      {.i = -1} },
+	{ TERMMOD,          XK_N,           kscrolldown,    {.i = -1} },
 };
 
 /*
